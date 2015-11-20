@@ -27,6 +27,11 @@ server to be ready to use.`,
 		if err := preConfig.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
+
+		images := &steps.ImagesStep{}
+		if err := images.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
 	},
 }
 
