@@ -24,7 +24,7 @@ var pullImages = []string{
 }
 
 type PullDockerImages struct {
-	ParallelStep
+	DefaultStep
 }
 
 func (*PullDockerImages) String() string { return "pull-images" }
