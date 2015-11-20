@@ -1,0 +1,47 @@
+{
+	"ImportPath": "github.com/mfojtik/oinc",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/cpuguy83/go-md2man/md2man",
+			"Comment": "v1.0.4",
+			"Rev": "71acacd42f85e5e82f70a55327789582a5200a90"
+		},
+		{
+			"ImportPath": "github.com/gosuri/uilive",
+			"Rev": "01e71c656e02ee031b6b2310fe13cc3cae675c25"
+		},
+		{
+			"ImportPath": "github.com/gosuri/uiprogress",
+			"Rev": "a0ad8768b8c36f9ffb32512546734b6115ce582e"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/mousetrap",
+			"Rev": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+		},
+		{
+			"ImportPath": "github.com/op/go-logging",
+			"Rev": "e8d5414f0947014548c2334044a0fac13187dfee"
+		},
+		{
+			"ImportPath": "github.com/russross/blackfriday",
+			"Comment": "v1.4",
+			"Rev": "0b647d0506a698cca42caca173e55559b12a69f2"
+		},
+		{
+			"ImportPath": "github.com/shurcooL/sanitized_anchor_name",
+			"Rev": "10ef21a441db47d8b13ebcc5fd2310f636973c77"
+		},
+		{
+			"ImportPath": "github.com/spf13/cobra",
+			"Rev": "6efbf0b624dccb17ac2b965f9b729d424d80bf17"
+		},
+		{
+			"ImportPath": "github.com/spf13/pflag",
+			"Rev": "08b1a584251b5b62f458943640fc8ebd4d50aaa5"
+		}
+	]
+}
