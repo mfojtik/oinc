@@ -5,7 +5,8 @@ OUTPUTDIR=_output/local/bin/linux/amd64
 BINARY=oinc
 
 VERSION=0.0.1
-BUILD_TIME=`date +%FT%T%z`
+BUILD_TIME=$(shell date +%FT%T%z)
+GODEPPATH=$(shell godep path)
 
 LDFLAGS=-ldflags "-X github.com/mfojtik/oinc/core.Version=${VERSION} -X github.com/mfojtik/oinc/core.BuildTime=${BUILD_TIME}"
 
@@ -13,6 +14,7 @@ LDFLAGS=-ldflags "-X github.com/mfojtik/oinc/core.Version=${VERSION} -X github.c
 
 $(BINARY): $(SOURCES)
 	mkdir -p ${OUTPUTDIR} && \
+	GOPATH="${GODEPPATH}:${GOPATH}" \
 	go build ${LDFLAGS} -o ${OUTPUTDIR}/${BINARY} ${SOURCEDIR}/main.go
 
 .PHONY: install
