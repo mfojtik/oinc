@@ -3,6 +3,7 @@ package steps
 import (
 	"path/filepath"
 
+	"github.com/mfojtik/oinc/pkg/log"
 	"github.com/mfojtik/oinc/pkg/util"
 )
 
@@ -26,5 +27,18 @@ func (*RunOpenShiftStep) Execute() error {
 		"master", "--etcd-dir", "/var/lib/origin/"+OpenShiftVolumes[2],
 		"--cors-allowed-origins=.*",
 	)
+	// When an error occurs, display logs and remove the failed container
+	if err != nil {
+		out, logsErr := util.GetSudoCommandOutput("docker", "logs", OpenShiftContainerName)
+		if logsErr != nil {
+			log.Error("Unable to get logs from %q container: %v", OpenShiftContainerName, logsErr)
+			return err
+		}
+		log.Debug(out)
+		rmErr := util.RunSudoCommand("docker", "rm", "-f", "-v", OpenShiftContainerName)
+		if rmErr != nil {
+			log.Error("Unable to remove %q container: %v", OpenShiftContainerName, rmErr)
+		}
+	}
 	return err
 }

@@ -10,9 +10,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ExecuteCmd = &cobra.Command{
-	Use:   "execute",
-	Short: "oinc is fully automated oppenshift-in-container installer",
+var LogLevel int
+
+var InstallCmd = &cobra.Command{
+	Use:   "install",
+	Short: "Download and install OpenShift v3",
 	Long: `Configure the host system to run OpenShift v3 in container and bootstrap OpenShift
 server to be ready to use.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -21,10 +23,18 @@ server to be ready to use.`,
 		}
 		logging.SetLevel(logging.Level(LogLevel), "")
 
-		download := &steps.DownloadReleaseStep{}
-		if err := download.Execute(); err != nil {
+		preConfig := &steps.PreConfigStep{}
+		if err := preConfig.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
 
+		images := &steps.ImagesStep{}
+		if err := images.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
 	},
+}
+
+func init() {
+	InstallCmd.PersistentFlags().IntVarP(&LogLevel, "loglevel", "v", 4, "Set the verbosity level (0-5), default: 4")
 }
