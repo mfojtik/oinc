@@ -6,6 +6,15 @@ server that runs in the Docker container. It does not require any configuration
 steps and it is fully automated to bring you the best experience with using
 OpenShift out-of-box.
 
+### Installation
+
+```console
+$ git clone https://github.com/mfojtik/oinc
+$ cd oinc && make install
+```
+
+### Usage
+
 The `oinc` provides this commands:
 
 `$ oinc setup`
