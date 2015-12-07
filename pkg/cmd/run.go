@@ -34,6 +34,16 @@ var RunCmd = &cobra.Command{
 			log.Critical("%s", err)
 		}
 
+		templates := &steps.InstallTemplatesStep{}
+		if err := templates.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
+
+		user := &steps.CreateUserStep{}
+		if err := user.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
+
 	},
 }
 

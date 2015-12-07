@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/mfojtik/oinc/pkg/log"
 	"github.com/mfojtik/oinc/pkg/util"
 )
 
@@ -38,13 +39,13 @@ func addRouterUser() error {
 }
 
 func (*InstallRouterStep) Execute() error {
+	log.Info("Installing HAProxy router ....")
 	if err := addRouterUser(); err != nil {
 		return err
 	}
 	_, err := util.RunOAdm("router",
 		"--create",
 		"--credentials", filepath.Join(util.MasterConfigPath, "openshift-router.kubeconfig"),
-		"--config", filepath.Join(util.MasterConfigPath, "admin.kubeconfig"),
 		"--service-account=router",
 	)
 	return err

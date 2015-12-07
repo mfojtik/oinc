@@ -47,6 +47,7 @@ func (*RunOpenShiftStep) Execute() error {
 		return nil
 	}
 	// When an error occurs, display logs and remove the failed container
+	log.Info("Starting OpenShift server at https://%s:8443/console ...", util.GetHostIP())
 	err := runOpenShift()
 	if err != nil {
 		out, logsErr := util.GetSudoCommandOutput("docker", "logs", OpenShiftContainerName)
