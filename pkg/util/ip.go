@@ -9,7 +9,7 @@ import (
 func GetHostIP() string {
 	out, err := RunCommand("hostname", "-I")
 	if err != nil {
-		log.Error("Unable to obtain host IP address: %v", err)
+		log.Error("Unable to obtain the host IP address: %v", err)
 	}
 	p := strings.Split(out, " ")
 	return p[0]
