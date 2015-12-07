@@ -3,6 +3,7 @@ package steps
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gosuri/uiprogress"
 	"github.com/mfojtik/oinc/pkg/log"
@@ -31,6 +32,7 @@ type PullDockerImages struct {
 func (*PullDockerImages) String() string { return "pull-images" }
 
 func (s *PullDockerImages) Execute() error {
+	time.Sleep(1 * time.Second)
 	log.Info("Pulling OpenShift Docker images ...")
 	uiprogress.Start()
 	bar := uiprogress.AddBar(len(pullImages))

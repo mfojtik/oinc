@@ -1,6 +1,8 @@
 package steps
 
 import (
+	"path"
+
 	"github.com/mfojtik/oinc/pkg/log"
 	"github.com/mfojtik/oinc/pkg/util"
 )
@@ -17,12 +19,12 @@ func (*CreateUserStep) Execute() error {
 	if err != nil {
 		return err
 	}
-	out, err := util.RunOc("login", "https://"+util.GetHostIP()+":8443", "-u", "test-admin", "-p", "test", "--api-version=v1")
+	out, err := util.RunOc("login", "https://"+util.GetHostIP()+":8443", "-u", "test-admin", "-p", "test", "--api-version=v1", "--certificate-authority", path.Join(util.MasterConfigPath, "ca.crt"))
 	if err != nil {
 		return err
 	}
 	log.Info(out)
-	out, _ = util.RunOc("project", "devel")
+	out, _ = util.RunOc("new-project", "devel")
 	log.Info(out)
 	return nil
 }

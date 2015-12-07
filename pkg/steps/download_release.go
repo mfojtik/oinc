@@ -32,6 +32,7 @@ type DownloadReleaseStep struct {
 func (*DownloadReleaseStep) String() string { return "download-release" }
 
 func (*DownloadReleaseStep) Execute() error {
+	log.Info("Downloading Origin release archive ...")
 	resp, err := http.Get(ReleaseURL)
 	if err != nil {
 		return err
@@ -73,7 +74,6 @@ func (*DownloadReleaseStep) Execute() error {
 }
 
 func downloadTar(url, dst string) error {
-	log.Info("Downloading %q to %q ...", url, dst)
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
