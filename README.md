@@ -8,7 +8,7 @@ OpenShift out-of-box.
 
 ### Installation
 
-Download the [binary](https://github.com/mfojtik/oinc/releases/download/v0.0.1/oinc-linux-amd64) from the Release page (currently only linux-amd64), or:
+Download the [binary](https://github.com/mfojtik/oinc/releases/download/v0.0.2/oinc-linux-amd64) from the Release page (currently only linux-amd64), or:
 
 ```console
 $ git clone https://github.com/mfojtik/oinc
