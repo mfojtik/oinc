@@ -12,6 +12,5 @@ func (s *ImagesStep) Execute() error {
 		Add(&DownloadReleaseStep{}).
 		Add(&PullDockerImages{PullImages: s.PullImages}).
 		Add(&CleanupExistingStep{}).
-		Add(&RunOpenShiftStep{}).
 		Execute()
 }
