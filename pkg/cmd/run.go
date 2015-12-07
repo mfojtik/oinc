@@ -8,7 +8,7 @@ import (
 
 var RunCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Run the OpenShift server in a container.",
+	Short: "Runs the OpenShift server in a container.",
 	Long:  `Runs the OpenShift server in a container`,
 	Run: func(cmd *cobra.Command, args []string) {
 		setupLogging()
