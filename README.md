@@ -1,8 +1,8 @@
 oinc - OpenShift in Container
 ==============================
 
-The `oinc` project allows you to easely configure, run and manage OpenShift
-server that runs in the Docker container. It does not require any configuration
+The `oinc` project allows you to easily configure, run and manage the OpenShift
+server that runs in the Docker a container. It does not require any configuration
 steps and it is fully automated to bring you the best experience with using
 OpenShift out-of-box.
 
@@ -17,32 +17,26 @@ $ cd oinc && make install
 
 ### Usage
 
-The `oinc` provides this commands:
+The `oinc` tool provides several commands:
 
 `$ oinc setup`
 
-This command does:
-
-* Configure the `/etc/sysconfig/docker` (add internal registry)
-* Disable firewalld (optional, ignore if you don't use it)
-* Restart Docker daemon
-* Pull all OpenShift Docker images needed for running OpenShift (registry, deployer, S2I builder, etc...)
-* Download latest release CLI tools
+* Configures the `/etc/sysconfig/docker` file (adds the internal registry)
+* Disables firewalld (optional, ignore if you don't use it)
+* Restarts Docker daemon
+* Pulls all OpenShift Docker images needed for running OpenShift (registry, deployer, S2I builder, etc...)
+* Downloads the latest release CLI tools
 
 `$ oinc run`
 
-This command does:
-
-* Create all host directories for configuration, volumes, etc...
-* Fix permissions on them (SELinux)
-* Start OpenShift server
-* Create OpenShift Docker Registry
-* Create HAProxy router
+* Creates all host directories for configuration, volumes, etc...
+* Fixes permissions on them (SELinux)
+* Starts OpenShift server
+* Creates the OpenShift Docker Registry
+* Creates the HAProxy router
 
 `$ oinc clean`
 
-This command does
-
-* Cleanup all host directories
-* Kill and remove OpenShift container
+* Cleans up all host directories
+* Kills and removes the OpenShift container
 
