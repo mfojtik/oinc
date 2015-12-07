@@ -16,7 +16,7 @@ func main() {
 var RootCmd = &cobra.Command{
 	Use:   "oinc",
 	Short: "OpenShift-in-Container installer",
-	Long:  "Install and run the OpenShift server in Docker container.",
+	Long:  "Install and run the OpenShift server in a Docker container.",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},
