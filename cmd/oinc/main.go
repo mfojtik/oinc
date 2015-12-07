@@ -6,14 +6,16 @@ import (
 )
 
 func main() {
-	RootCmd.AddCommand(cmd.ExecuteCmd)
-	RootCmd.AddCommand(cmd.InstallCmd)
+	RootCmd.AddCommand(cmd.SetupCmd)
+	RootCmd.AddCommand(cmd.RunCmd)
 	RootCmd.Execute()
 }
 
 var RootCmd = &cobra.Command{
-	Use: "oinc",
+	Use:   "oinc",
+	Short: "OpenShift-in-Container installer",
+	Long:  "Install and run the OpenShift server in Docker container.",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		cmd.Help()
 	},
 }
