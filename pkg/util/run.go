@@ -42,7 +42,8 @@ func RunOAdm(args ...string) (string, error) {
 	return GetSudoCommandOutput("oadm", args...)
 }
 
-func RunOc(args ...string) (string, error) {
+func RunAdminOc(args ...string) (string, error) {
 	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
+	args = append(args, []string{"--config", filepath.Join(MasterConfigPath, "admin.kubeconfig")}...)
 	return GetSudoCommandOutput("oc", args...)
 }

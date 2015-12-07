@@ -16,6 +16,7 @@ func (*InstallRegistryStep) Execute() error {
 	_, err := util.RunOAdm("registry",
 		"--create",
 		"--credentials", filepath.Join(util.MasterConfigPath, "openshift-registry.kubeconfig"),
+		"--config", filepath.Join(util.MasterConfigPath, "admin.kubeconfig"),
 	)
 	return err
 }

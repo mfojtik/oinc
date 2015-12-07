@@ -16,7 +16,7 @@ type InstallRouterStep struct {
 func (*InstallRouterStep) String() string { return "install-router" }
 
 func addRouterUser() error {
-	out, err := util.RunOc("get", "scc", "privileged", "-o", "json")
+	out, err := util.RunAdminOc("get", "scc", "privileged", "-o", "json")
 	if err != nil {
 		return err
 	}
@@ -33,7 +33,7 @@ func addRouterUser() error {
 	}
 	defer os.Remove(f.Name())
 	ioutil.WriteFile(f.Name(), []byte(result), 0600)
-	_, err = util.RunOc("replace", "scc", "privileged", "-f", f.Name())
+	_, err = util.RunAdminOc("replace", "scc", "privileged", "-f", f.Name())
 	return err
 }
 

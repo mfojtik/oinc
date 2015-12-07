@@ -46,7 +46,6 @@ func (*RunOpenShiftStep) Execute() error {
 		log.Info("OpenShift container is already running")
 		return nil
 	}
-
 	// When an error occurs, display logs and remove the failed container
 	err := runOpenShift()
 	if err != nil {
