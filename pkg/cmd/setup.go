@@ -10,8 +10,8 @@ var PullImages bool
 
 var SetupCmd = &cobra.Command{
 	Use:   "setup",
-	Short: "Setups the pre-requires for running OpenShift server",
-	Long:  `Setups the host system to run OpenShift server in container.`,
+	Short: "Sets up the system for running the OpenShift server",
+	Long:  `Sets up the host system for running the OpenShift server in a container.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		setupLogging()
 		preConfig := &steps.PreConfigStep{}
@@ -28,5 +28,5 @@ var SetupCmd = &cobra.Command{
 
 func init() {
 	addPersistentFlags(SetupCmd)
-	SetupCmd.PersistentFlags().BoolVarP(&PullImages, "pull", "p", true, "Pull Docker images if they does not exists locally")
+	SetupCmd.PersistentFlags().BoolVarP(&PullImages, "pull", "p", true, "Pull Docker images if they do not exist locally")
 }
