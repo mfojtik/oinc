@@ -41,3 +41,8 @@ func RunOAdm(args ...string) (string, error) {
 	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
 	return GetSudoCommandOutput("oadm", args...)
 }
+
+func RunOc(args ...string) (string, error) {
+	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
+	return GetSudoCommandOutput("oc", args...)
+}

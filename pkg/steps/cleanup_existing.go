@@ -22,7 +22,7 @@ func (*CleanupExistingStep) Execute() error {
 		return nil
 	}
 	if r == "true" {
-		log.Notice("The %q container is running, skipping cleanup")
+		log.Notice("The %q container is running, skipping cleanup", OpenShiftContainerName)
 		log.Notice("Run $ docker rm %s", OpenShiftContainerName)
 		return fmt.Errorf("Running %q container found", OpenShiftContainerName)
 	}

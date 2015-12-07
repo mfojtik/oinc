@@ -12,13 +12,25 @@ var RunCmd = &cobra.Command{
 	Long:  `Runs the OpenShift server in a container`,
 	Run: func(cmd *cobra.Command, args []string) {
 		setupLogging()
+		dirs := &steps.PrepareDirsStep{}
+		if err := dirs.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
+
 		server := &steps.RunOpenShiftStep{}
 		if err := server.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
 
+		(&steps.FixPermissionsStep{}).Execute()
+
 		registry := &steps.InstallRegistryStep{}
 		if err := registry.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
+
+		router := &steps.InstallRouterStep{}
+		if err := router.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
 

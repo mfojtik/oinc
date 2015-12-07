@@ -8,10 +8,15 @@ import (
 	"github.com/mfojtik/oinc/pkg/util"
 )
 
-var BaseDir = filepath.Join(os.Getenv("HOME"), ".openshift", "oinc")
-var OpenShiftVolumes = []string{
-	"openshift.local.volumes", "openshift.local.config", "openshift.local.etcd",
-}
+var (
+	BaseDir                 = filepath.Join(os.Getenv("HOME"), ".openshift", "oinc")
+	OpenShiftPrivateVolumes = []string{
+		"openshift.local.config", "openshift.local.etcd",
+	}
+	OpenShiftPublicVolumes = []string{
+		"openshift.local.volumes",
+	}
+)
 
 type PrepareDirsStep struct {
 	ParallelStep
@@ -20,7 +25,7 @@ type PrepareDirsStep struct {
 func (*PrepareDirsStep) String() string { return "prepare-dir" }
 
 func (*PrepareDirsStep) Execute() error {
-	for _, path := range OpenShiftVolumes {
+	for _, path := range append(OpenShiftPrivateVolumes, OpenShiftPublicVolumes...) {
 		path = filepath.Join(BaseDir, path)
 		if _, err := os.Stat(path); err == nil {
 			log.Info("Directory %q already exists. Skipping ...", path)

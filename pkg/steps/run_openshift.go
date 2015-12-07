@@ -2,6 +2,7 @@ package steps
 
 import (
 	"path/filepath"
+	"time"
 
 	"github.com/mfojtik/oinc/pkg/log"
 	"github.com/mfojtik/oinc/pkg/util"
@@ -13,21 +14,41 @@ type RunOpenShiftStep struct {
 
 func (*RunOpenShiftStep) String() string { return "restart-docker" }
 
-func (*RunOpenShiftStep) Execute() error {
-	err := util.RunSudoCommand("docker", "run", "-d", "--name", OpenShiftContainerName, "--privileged",
-		"--net", "host", "--pid", "host",
+func volume(path string, private bool) string {
+	if private {
+		return filepath.Join(BaseDir, path) + ":" + "/var/lib/origin/" + path + ":z"
+	}
+	return filepath.Join(BaseDir, path) + ":" + filepath.Join(BaseDir, path) + ":z"
+}
+
+func runOpenShift(args ...string) error {
+	return util.RunSudoCommand("docker", "run", "-d", "--name", OpenShiftContainerName,
+		"--privileged",
+		"--net", "host",
+		"--pid", "host",
 		"-v", "/:/rootfs:ro",
 		"-v", "/sys:/sys:ro",
 		"-v", "/var/run:/var/run:rw",
 		"-v", "/var/lib/docker:/var/lib/docker:rw",
-		"-v", filepath.Join(BaseDir, OpenShiftVolumes[0])+":/var/lib/origin/"+OpenShiftVolumes[0]+":z",
-		"-v", filepath.Join(BaseDir, OpenShiftVolumes[1])+":/var/lib/origin/"+OpenShiftVolumes[1]+":z",
-		"-v", filepath.Join(BaseDir, OpenShiftVolumes[2])+":/var/lib/origin/"+OpenShiftVolumes[2]+":z",
+		"-v", volume(OpenShiftPublicVolumes[0], false),
+		"-v", volume(OpenShiftPrivateVolumes[0], true),
+		"-v", volume(OpenShiftPrivateVolumes[1], true),
 		"openshift/origin", "start",
-		"master", "--etcd-dir", "/var/lib/origin/"+OpenShiftVolumes[2],
+		"--nodes=127.0.0.1",
+		"--hostname=localhost",
+		"--volume-dir", filepath.Join(BaseDir, OpenShiftPublicVolumes[0]),
 		"--cors-allowed-origins=.*",
 	)
+}
+
+func (*RunOpenShiftStep) Execute() error {
+	if util.RunSudoCommand("docker", "inspect", OpenShiftContainerName) == nil {
+		log.Info("OpenShift container is already running")
+		return nil
+	}
+
 	// When an error occurs, display logs and remove the failed container
+	err := runOpenShift()
 	if err != nil {
 		out, logsErr := util.GetSudoCommandOutput("docker", "logs", OpenShiftContainerName)
 		if logsErr != nil {
@@ -39,6 +60,9 @@ func (*RunOpenShiftStep) Execute() error {
 		if rmErr != nil {
 			log.Error("Unable to remove %q container: %v", OpenShiftContainerName, rmErr)
 		}
+	} else {
+		// FIXME: This should be really a health-check
+		time.Sleep(15 * time.Second)
 	}
 	return err
 }

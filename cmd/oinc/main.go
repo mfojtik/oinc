@@ -8,6 +8,7 @@ import (
 func main() {
 	RootCmd.AddCommand(cmd.SetupCmd)
 	RootCmd.AddCommand(cmd.RunCmd)
+	RootCmd.AddCommand(cmd.CleanCmd)
 	RootCmd.Execute()
 }
 
