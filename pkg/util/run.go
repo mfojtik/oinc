@@ -1,10 +1,17 @@
 package util
 
 import (
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/mfojtik/oinc/pkg/log"
+)
+
+var (
+	BaseDir          = filepath.Join(os.Getenv("HOME"), ".openshift", "oinc")
+	MasterConfigPath = filepath.Join(BaseDir, "openshift.local.config", "master")
 )
 
 func RunSudoCommand(path string, args ...string) error {
@@ -28,4 +35,9 @@ func RunCommand(path string, args ...string) (string, error) {
 		log.Debug("%q returned %q", path+" "+strings.Join(args, " "), string(out))
 	}
 	return strings.TrimSpace(string(out)), err
+}
+
+func RunOAdm(args ...string) (string, error) {
+	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
+	return GetSudoCommandOutput("oadm", args...)
 }

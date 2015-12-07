@@ -66,6 +66,9 @@ func (*DownloadReleaseStep) Execute() error {
 		return err
 	}
 	_, err = util.RunCommand("tar", "-x", "-z", "-f", filepath.Join(BaseDir, "release.tar.gz"), "-C", filepath.Join(BaseDir, "bin"))
+	if err != nil {
+		log.Info("OpenShift commands installed to %q", filepath.Join(BaseDir, "bin"))
+	}
 	return err
 }
 

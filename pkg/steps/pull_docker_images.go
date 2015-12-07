@@ -24,12 +24,13 @@ var pullImages = []string{
 }
 
 type PullDockerImages struct {
+	PullImages bool
 	DefaultStep
 }
 
 func (*PullDockerImages) String() string { return "pull-images" }
 
-func (*PullDockerImages) Execute() error {
+func (s *PullDockerImages) Execute() error {
 	log.Info("Pulling OpenShift Docker images ...")
 	uiprogress.Start()
 	bar := uiprogress.AddBar(len(pullImages))
@@ -39,6 +40,11 @@ func (*PullDockerImages) Execute() error {
 	index := 0
 	errors := map[string]error{}
 	for bar.Incr() {
+		if !s.PullImages && isAvailable(pullImages[index]) {
+			log.Debug("Image %q available locally, skipping pull ...", pullImages[index])
+			index++
+			continue
+		}
 		err := util.RunSudoCommand("docker", "pull", pullImages[index])
 		if err != nil {
 			errors[pullImages[index]] = err
@@ -53,4 +59,8 @@ func (*PullDockerImages) Execute() error {
 		return fmt.Errorf("Images failed to pull")
 	}
 	return nil
+}
+
+func isAvailable(name string) bool {
+	return util.RunSudoCommand("docker", "inspect", name) == nil
 }

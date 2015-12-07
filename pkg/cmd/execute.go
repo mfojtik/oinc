@@ -21,10 +21,19 @@ server to be ready to use.`,
 		}
 		logging.SetLevel(logging.Level(LogLevel), "")
 
-		download := &steps.DownloadReleaseStep{}
-		if err := download.Execute(); err != nil {
+		server := &steps.RunOpenShiftStep{}
+		if err := server.Execute(); err != nil {
+			log.Critical("%s", err)
+		}
+
+		registry := &steps.InstallRegistryStep{}
+		if err := registry.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
 
 	},
+}
+
+func init() {
+	ExecuteCmd.PersistentFlags().IntVarP(&LogLevel, "loglevel", "v", 4, "Set the verbosity level (0-5), default: 4")
 }

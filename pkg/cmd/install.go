@@ -10,7 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var LogLevel int
+var (
+	LogLevel   int
+	PullImages bool
+)
 
 var InstallCmd = &cobra.Command{
 	Use:   "install",
@@ -28,7 +31,7 @@ server to be ready to use.`,
 			log.Critical("%s", err)
 		}
 
-		images := &steps.ImagesStep{}
+		images := &steps.ImagesStep{PullImages: PullImages}
 		if err := images.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
@@ -37,4 +40,5 @@ server to be ready to use.`,
 
 func init() {
 	InstallCmd.PersistentFlags().IntVarP(&LogLevel, "loglevel", "v", 4, "Set the verbosity level (0-5), default: 4")
+	InstallCmd.PersistentFlags().BoolVarP(&PullImages, "pull", "p", true, "Pull Docker images if they does not exists locally")
 }
