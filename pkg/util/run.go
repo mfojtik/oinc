@@ -14,6 +14,10 @@ var (
 	MasterConfigPath = filepath.Join(BaseDir, "openshift.local.config", "master")
 )
 
+func BaseDirPath(cmd string) string {
+	return filepath.Join(BaseDir, "bin", cmd)
+}
+
 func RunSudoCommand(path string, args ...string) error {
 	_, err := GetSudoCommandOutput(path, args...)
 	return err
@@ -38,9 +42,8 @@ func RunCommand(path string, args ...string) (string, error) {
 }
 
 func RunOAdm(args ...string) (string, error) {
-	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
 	args = append(args, []string{"--config", filepath.Join(MasterConfigPath, "admin.kubeconfig")}...)
-	return GetSudoCommandOutput("oadm", args...)
+	return GetSudoCommandOutput(BaseDirPath("oadm"), args...)
 }
 
 func RunAdminOc(args ...string) (string, error) {
@@ -49,6 +52,5 @@ func RunAdminOc(args ...string) (string, error) {
 }
 
 func RunOc(args ...string) (string, error) {
-	os.Setenv("PATH", os.Getenv("PATH")+":"+filepath.Join(BaseDir, "bin"))
-	return RunCommand("oc", args...)
+	return RunCommand(BaseDirPath("oc"), args...)
 }
