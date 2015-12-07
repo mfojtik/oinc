@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/mfojtik/oinc/pkg/log"
 	"github.com/mfojtik/oinc/pkg/steps"
 	"github.com/spf13/cobra"
@@ -43,6 +46,15 @@ var RunCmd = &cobra.Command{
 		if err := user.Execute(); err != nil {
 			log.Critical("%s", err)
 		}
+
+		fmt.Fprintf(os.Stdout, `
+
+OpenShift is now running! To access it using CLI tools, please run this command:
+
+$ eval $(oinc env)
+$ oc status
+
+`)
 
 	},
 }
