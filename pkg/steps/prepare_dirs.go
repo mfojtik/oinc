@@ -25,9 +25,6 @@ type PrepareDirsStep struct {
 func (*PrepareDirsStep) String() string { return "prepare-dir" }
 
 func (*PrepareDirsStep) Execute() error {
-	if err := os.MkdirAll(BaseDir, 0770); err != nil {
-		return err
-	}
 	for _, path := range append(OpenShiftPrivateVolumes, OpenShiftPublicVolumes...) {
 		path = filepath.Join(BaseDir, path)
 		if _, err := os.Stat(path); err == nil {

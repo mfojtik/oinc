@@ -32,6 +32,10 @@ type DownloadReleaseStep struct {
 func (*DownloadReleaseStep) String() string { return "download-release" }
 
 func (*DownloadReleaseStep) Execute() error {
+	log.Info("Creating %q directory ...", BaseDir)
+	if err := os.MkdirAll(BaseDir, 0770); err != nil {
+		return err
+	}
 	log.Info("Downloading Origin release archive ...")
 	resp, err := http.Get(ReleaseURL)
 	if err != nil {
