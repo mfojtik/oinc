@@ -4,13 +4,12 @@ import (
 	"strings"
 
 	"github.com/mfojtik/oinc/pkg/log"
-	"github.com/mfojtik/oinc/pkg/util"
 )
 
 func GetHostIP() string {
 	var out string
 	var err error
-	if util.IsDarwin() {
+	if IsDarwin() {
 		out, err = RunCommand("ipconfig", "getifaddr", "en0")
 	} else {
 		out, err = RunCommand("hostname", "-I")
