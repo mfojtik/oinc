@@ -4,10 +4,17 @@ import (
 	"strings"
 
 	"github.com/mfojtik/oinc/pkg/log"
+	"github.com/mfojtik/oinc/pkg/util"
 )
 
 func GetHostIP() string {
-	out, err := RunCommand("hostname", "-I")
+	var out string
+	var err error
+	if util.IsDarwin() {
+		out, err = RunCommand("ipconfig", "getifaddr", "en0")
+	} else {
+		out, err = RunCommand("hostname", "-I")
+	}
 	if err != nil {
 		log.Error("Unable to obtain the host IP address: %v", err)
 	}

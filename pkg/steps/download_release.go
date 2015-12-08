@@ -58,8 +58,14 @@ func (*DownloadReleaseStep) Execute() error {
 	}
 	downloadUrl := ""
 	for _, asset := range rel.Assets {
-		if strings.Contains(asset.URL, "linux-amd64") {
-			downloadUrl = asset.URL
+		if util.IsDarwin() {
+			if strings.Contains(asset.URL, "darwin-amd64") {
+				downloadUrl = asset.URL
+			}
+		} else {
+			if strings.Contains(asset.URL, "linux-amd64") {
+				downloadUrl = asset.URL
+			}
 		}
 	}
 	if err := downloadTar(downloadUrl, filepath.Join(BaseDir, "release.tar.gz")); err != nil {
