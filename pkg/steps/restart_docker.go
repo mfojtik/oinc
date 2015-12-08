@@ -9,5 +9,8 @@ type RestartDockerStep struct {
 func (*RestartDockerStep) String() string { return "restart-docker" }
 
 func (*RestartDockerStep) Execute() error {
+	if util.IsDarwin() {
+		return nil
+	}
 	return util.RunSudoCommand("systemctl", "restart", "docker")
 }

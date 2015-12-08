@@ -21,6 +21,9 @@ type ModifyDockerConfigStep struct {
 func (*ModifyDockerConfigStep) String() string { return "modify-docker-config" }
 
 func (*ModifyDockerConfigStep) Execute() error {
+	if util.IsDarwin() {
+		return nil
+	}
 	file, err := os.Open(SystemDockerConfigPath)
 	if err != nil {
 		return err

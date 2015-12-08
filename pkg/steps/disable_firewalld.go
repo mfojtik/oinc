@@ -12,6 +12,9 @@ type DisableFirewalldStep struct {
 func (*DisableFirewalldStep) String() string { return "disable-firewalld" }
 
 func (*DisableFirewalldStep) Execute() error {
+	if util.IsDarwin() {
+		return nil
+	}
 	log.Info("Stopping the firewalld daemon")
 	return util.RunSudoCommand("systemctl", "stop", "firewalld")
 }

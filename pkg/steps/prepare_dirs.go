@@ -34,7 +34,9 @@ func (*PrepareDirsStep) Execute() error {
 		if err := os.MkdirAll(path, 0700); err != nil {
 			return err
 		}
-		util.RunSudoCommand("chcon", "-R", "-t", "svirt_sandbox_file_t", path)
+		if !util.IsDarwin() {
+			util.RunSudoCommand("chcon", "-R", "-t", "svirt_sandbox_file_t", path)
+		}
 	}
 	return nil
 }

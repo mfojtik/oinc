@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/mfojtik/oinc/pkg/log"
@@ -24,6 +25,10 @@ func RunSudoCommand(path string, args ...string) error {
 }
 
 func GetSudoCommandOutput(path string, args ...string) (string, error) {
+	// Don't do sudo on OSX
+	if runtime.GOOS == "darwin" {
+		return RunCommand(path, args...)
+	}
 	sudoPath, err := exec.LookPath("sudo")
 	if err != nil {
 		return "", err
