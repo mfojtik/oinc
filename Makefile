@@ -17,7 +17,7 @@ LDFLAGS=-ldflags "-X github.com/mfojtik/oinc/core.Version=${VERSION} -X github.c
 
 .PHONY: install
 install:
-	go install ${LDFLAGS} ./...
+	GOPATH="${GODEPPATH}/Godeps/_workspace:${GOPATH}" go install ${LDFLAGS} ./...
 
 .PHONY: clean
 clean:
