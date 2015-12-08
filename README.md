@@ -6,6 +6,9 @@ server that runs in the Docker a container. It does not require any configuratio
 steps and it is fully automated to bring you the best experience with using
 OpenShift out-of-box.
 
+[![asciicast](https://asciinema.org/a/1pe3bed84u8w6zon5a1tt8j6f.png)](https://asciinema.org/a/1pe3bed84u8w6zon5a1tt8j6f)
+
+
 ### Installation
 
 Download the [binary](https://github.com/mfojtik/oinc/releases/download/v0.0.2/oinc-linux-amd64) from the Release page (currently only linux-amd64), or:
