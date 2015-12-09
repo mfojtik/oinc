@@ -2,7 +2,7 @@ oinc - OpenShift in Container
 ==============================
 
 The `oinc` project allows you to easily configure, run and manage the OpenShift
-server that runs in the Docker a container. It does not require any configuration
+server that runs in a Docker container. It does not require any configuration
 steps and it is fully automated to bring you the best experience with using
 OpenShift out-of-box.
 
